@@ -47,8 +47,11 @@ export default function App() {
 				estado: obtenerEstado(vuelo, tiempoActual, false),
 			};
 		});
+		// Replace hora de salida with Hora (esperada) de salida
+		const columnas = [...COLUMNAS];
+		columnas[4] = 'Hora (esperada) de salida';
 		return markdownTable([
-			COLUMNAS,
+			columnas,
 			...vuelosConEstado.map((v) => Object.values(v)),
 		]);
 	}, [vuelos, tiempoActual]);
