@@ -4,13 +4,6 @@ import { FormularioVuelo } from './components/FormularioVuelo';
 import { Vuelo, MAPA_PRIORIDAD, COLUMNAS } from './schema';
 import { obtenerTiempo, obtenerEstado, generarVuelo } from './utils';
 
-const DIA_ACTUAL = Intl.DateTimeFormat('es-ES', {
-	weekday: 'short',
-	year: 'numeric',
-	month: 'short',
-	day: 'numeric',
-}).format(new Date());
-
 type Estado = 'MENU' | 'AGREGAR' | 'LISTA' | 'SIMULACION'
 
 export default function App() {
@@ -117,9 +110,15 @@ export default function App() {
 				</div>
 				<div className='flex'>
 					<div className='flex capitalize text-2xl'>
-						<span>{DIA_ACTUAL}</span>
 						<span className='ml-2'>
-							{tiempoActual.toLocaleTimeString()}
+							{Intl.DateTimeFormat('es-ES', {
+								hour: 'numeric',
+								minute: 'numeric',
+								day: 'numeric',
+								weekday: 'long',
+								month: 'long',
+								year: 'numeric',
+							}).format(tiempoActual)}
 						</span>
 					</div>
 				</div>
@@ -182,7 +181,7 @@ export default function App() {
 			)}
 			{estado === 'LISTA' && (
 				<>
-					<div className='flex flex-col mt-2'>
+					<div className='flex flex-col mt-2 min-h-screen'>
 						<button
 							onClick={() => setEstado('MENU')}
 							className='bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300'
@@ -199,7 +198,7 @@ export default function App() {
 			)}
 			{estado === 'SIMULACION' && (
 				<>
-					<div className='flex flex-col mt-2'>
+					<div className='flex flex-col mt-2 min-h-screen'>
 						{vuelos.length === 0 && (
 							<button
 								onClick={() => {
