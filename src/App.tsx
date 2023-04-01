@@ -55,13 +55,11 @@ export default function App() {
 
 	// Generador de tiempo
 	useEffect(() => {
-		if (estado === 'SIMULACION') {
+		if (estado === 'SIMULACION' && vuelos.length > 0) {
 			const intervalo = setInterval(() => {
 				setTiempoActual((tiempo) => {
 					if (
-						(tiempo.getHours() === 23 &&
-							tiempo.getMinutes() === 59) ||
-						vuelos.length === 0
+						tiempo.getTime() >= obtenerTiempo('23:59').getTime()
 					)
 						return tiempo;
 					const nuevoTiempo = ultimoVueloSimulado
