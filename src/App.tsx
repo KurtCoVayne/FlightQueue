@@ -58,16 +58,12 @@ export default function App() {
 		if (estado === 'SIMULACION' && vuelos.length > 0) {
 			const intervalo = setInterval(() => {
 				setTiempoActual((tiempo) => {
-					if (
-						tiempo.getTime() >= obtenerTiempo('23:59').getTime()
-					)
-						return tiempo;
 					const nuevoTiempo = ultimoVueloSimulado
 						? new Date(tiempo.getTime() + 60 * 1000)
 						: obtenerTiempo(vuelos[0].hora);
 					return nuevoTiempo;
 				});
-			}, 500);
+			}, ultimoVueloSimulado ? 250 : 500);
 			return () => clearInterval(intervalo);
 		}
 	}, [estado, vuelos, ultimoVueloSimulado]);
